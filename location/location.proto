@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package location;
+option go_package = "location/pb";
+
+// 練習場所の型定義
+message Location {
+    int64 id = 1;
+    string name = 2;
+    double latitude = 3;
+    double longitude = 4;
+    string note = 5;
+    string mapUrl = 6;
+}
+
+// CREATEとUPDATEにおける入力のための型
+message LocationInput {
+  string name = 1;
+  double latitude = 2;
+  double longitude = 3;
+  string note = 4;
+  string mapUrl = 5;
+}
+
+// CREATEする練習場所の内容(name, latitude, longitude, note, mapUrl)を受け取る
+message CreateLocationRequest {
+    LocationInput locationInput = 1;
+}
+
+// CREATEした練習場所を返す
+message CreateLocationResponse {
+    Location location = 1;
+}
+
+// READする練習場所のIDを受け取る
+message ReadLocationRequest {
+    int64 id = 1;
+}
+
+// 該当するIDの練習場所を返す
+message ReadLocationResponse {
+    Location location = 1;
+}
+
+// UPDATEする練習場所のIDと変更内容を受け取る
+message UpdateLocationRequest {
+    int64 id = 1;
+    LocationInput locationInput = 2;
+}
+
+// UPDATEした練習場所を返す 
+message UpdateLocationResponse {
+    Location location = 1;
+}
+
+// DELETEする練習場所のIDを受け取る
+message DeleteLocationResponse {
+    int64 id = 1;
+}
+
+// DELETEした練習場所のIDを返す
+message DeleteLocationRequest {
+    int64 id = 1;
+}
+
+// 全取得の際、入力は無し
+message ListLocationRequest {
+
+}
+
+// 全取得した練習場所を１つずつ返すので、配列(repeated)の形ではなくLocation1つを返す形
+message ListLocationResponse {
+    Location location = 1;
+}
+
+// locationサービスを定義
+service LocationService {
+    rpc CreateLocation(CreateLocationRequest) returns(CreateLocationResponse);
+    rpc ReadLocation(ReadLocationRequest) returns(ReadLocationResponse);
+    rpc UpdateLocation(UpdateLocationRequest) returns(UpdateLocationResponse);
+    rpc DeleteLocation(DeleteLocationRequest) returns(DeleteLocationResponse);
+    rpc ListLocation(ListLocationRequest) returns(stream ListLocationResponse);
+}
