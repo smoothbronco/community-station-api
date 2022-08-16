@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/smoothbronco/community-station-api/location/pb"
 	"gorm.io/driver/mysql"
@@ -14,7 +15,7 @@ type Repository interface {
 	SelectLocationByID(ctx context.Context, id int64) (*pb.Location, error)
 	UpdateLocation(ctx context.Context, id int64, input *pb.LocationInput) error
 	DeleteLocation(ctx context.Context, id int64) error
-	SelectAllLocations() (*gorm.Rows, error)
+	SelectAllLocations() (*sql.Rows, error)
 }
 
 type mysqlRepo struct {
@@ -50,9 +51,9 @@ func (r *mysqlRepo) InsertLocation(ctx context.Context, input *pb.LocationInput)
 }
 
 // SelectAllLocations implements Repository
-func (r *mysqlRepo) SelectAllLocations() (*gorm.Rows, error) {
-	var locations *gorm.Rows
-	if err := r.db.Find(&locations).Error; err != nil {
+func (r *mysqlRepo) SelectAllLocations() (*sql.Rows, error) {
+	locations, err := r.db.Model(&pb.Location{}).Rows()
+	if err != nil {
 		return nil, err
 	}
 	return locations, nil
