@@ -54,12 +54,12 @@ message UpdateLocationResponse {
 }
 
 // DELETEする練習場所のIDを受け取る
-message DeleteLocationResponse {
+message DeleteLocationRequest {
     int64 id = 1;
 }
 
 // DELETEした練習場所のIDを返す
-message DeleteLocationRequest {
+message DeleteLocationResponse {
     int64 id = 1;
 }
 
