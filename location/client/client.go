@@ -25,6 +25,10 @@ func NewClient(url string) (*Client, error) {
 	return &Client{conn, client}, nil
 }
 
+func (c *Client) Close() {
+	c.conn.Close()
+}
+
 func (c *Client) CreateLocation(ctx context.Context, input *pb.LocationInput) (*model.Location, error) {
 	res, err := c.Service.CreateLocation(
 		ctx,
@@ -40,6 +44,7 @@ func (c *Client) CreateLocation(ctx context.Context, input *pb.LocationInput) (*
 		Latitude:  res.Location.Latitude,
 		Longitude: res.Location.Longitude,
 		Note:      res.Location.Note,
+		MapUrl:    res.Location.MapUrl,
 	}, nil
 }
 
@@ -55,6 +60,7 @@ func (c *Client) ReadLocation(ctx context.Context, id int64) (*model.Location, e
 		Latitude:  res.Location.Latitude,
 		Longitude: res.Location.Longitude,
 		Note:      res.Location.Note,
+		MapUrl:    res.Location.MapUrl,
 	}, nil
 }
 
@@ -70,6 +76,7 @@ func (c *Client) UpdateLocation(ctx context.Context, id int64, input *pb.Locatio
 		Latitude:  res.Location.Latitude,
 		Longitude: res.Location.Longitude,
 		Note:      res.Location.Note,
+		MapUrl:    res.Location.MapUrl,
 	}, nil
 }
 
@@ -102,6 +109,7 @@ func (c *Client) ListLocation(ctx context.Context) ([]*model.Location, error) {
 			Latitude:  r.Location.Latitude,
 			Longitude: r.Location.Longitude,
 			Note:      r.Location.Note,
+			MapUrl:    r.Location.MapUrl,
 		})
 	}
 	return locations, nil
