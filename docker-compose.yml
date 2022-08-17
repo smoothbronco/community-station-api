@@ -10,8 +10,7 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_DATABASE: community_station
-      MYSQL_ROOT_PASSWORD: community_station1234
-      MYSQL_USER: community_station_dev
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: community_station_dev
+      MYSQL_USER: community_station
+      MYSQL_PASSWORD: "community_station1234"
       TZ: "Asia/Tokyo"
