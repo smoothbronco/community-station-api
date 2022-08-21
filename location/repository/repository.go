@@ -23,8 +23,8 @@ type mysqlRepo struct {
 }
 
 func NewMysqlRepo() (Repository, error) {
-	dns := "community_station:community_station1234@tcp(127.0.0.1:3306)/community_station_dev?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
+	dsn := "community_station:community_station1234@tcp(127.0.0.1:3306)/community_station_dev?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
