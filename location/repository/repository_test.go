@@ -11,8 +11,12 @@ import (
 )
 
 func TestNewMysqlRepo(t *testing.T) {
+	type args struct {
+		db *gorm.DB
+	}
 	tests := []struct {
 		name    string
+		args    args
 		want    Repository
 		wantErr bool
 	}{
@@ -20,7 +24,7 @@ func TestNewMysqlRepo(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := NewMysqlRepo()
+			got, err := NewMysqlRepo(tt.args.db)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewMysqlRepo() error = %v, wantErr %v", err, tt.wantErr)
 				return
