@@ -5,9 +5,7 @@ import (
 	"database/sql"
 
 	"github.com/smoothbronco/community-station-api/location/pb"
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 type Repository interface {
@@ -22,14 +20,7 @@ type mysqlRepo struct {
 	db *gorm.DB
 }
 
-func NewMysqlRepo() (Repository, error) {
-	dsn := "community_station:community_station1234@tcp(127.0.0.1:3306)/community_station_dev?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		return nil, err
-	}
-	db.AutoMigrate(&pb.Location{})
-	db.Logger = db.Logger.LogMode(logger.Info)
+func NewMysqlRepo(db *gorm.DB) (Repository, error) {
 	return &mysqlRepo{db}, nil
 }
 
